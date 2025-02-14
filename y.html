@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message For You</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #fce4ec;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            min-height: 400px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease-in-out;
+            transform: translateX(100%);
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        
+        .slide.active {
+            transform: translateX(0);
+        }
+        
+        .cat {
+            font-size: 80px;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            margin: 20px 0;
+        }
+        
+        .message {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            margin: 30px 0;
+            max-height: 350px;
+            overflow-y: auto;
+            padding: 0 20px;
+            text-align: left;
+        }
+        
+        .btn {
+            background: #ff4081;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        h2 {
+            color: #ff4081;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #ff4081;
+            border-radius: 50%;
+            animation: dotPulse 1.5s infinite;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Styling untuk scrollbar di message */
+        .message::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .message::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .message::-webkit-scrollbar-thumb {
+            background: #ff4081;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slide active" id="slide1">
+            <h2>Hai Kamu! ✨</h2>
+            <div class="cat" onclick="nextSlide()">🐱</div>
+            <p>Klik kucingnya...</p>
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        
+        <div class="slide" id="slide2">
+            <div class="message">
+                Hiii yukuu, I hope you're doing well now and always. Please don’t forget to appreciate yourself—you matter more than you realize. Maybe this feels a bit unusual coming from me since I’d normally just say it straight to you, but this time, I wanted to express it differently.
+
+                Honestly, if you compare this to other people's efforts, it’s basically zero—no surprises, no flowers, no romantic background music. But oh well, the intention is still the same: I just want you to be happy. You have your own dreams to chase, and so do I.
+
+                And yeah… I know that for now, I’m not quite good enough for you. But who knows? Maybe someday. See you in the aisle. 😉
+            </div>
+            <button class="btn" onclick="nextSlide()">Lanjut 🐱</button>
+        </div>
+        
+        <div class="slide" id="slide3">
+            <h2>dua-duanya ada isinya</h2>
+            <p>coba klik deh 🐱</p>
+            <div style="margin: 20px 0;">
+                <button class="btn" onclick="showResponse('1')">😺</button>
+                <button class="btn" onclick="showResponse('2')" style="margin-left: 10px; background: #e91e63;">🌟</button>
+            </div>
+            <p id="response" style="margin-top: 20px; font-size: 20px;"></p>
+            <button id="restartBtn" class="btn" onclick="restart()" style="display: none;">Mulai Lagi 🐱</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        
+        function nextSlide() {
+            const currentElement = document.getElementById(`slide${currentSlide}`);
+            const nextElement = document.getElementById(`slide${currentSlide + 1}`);
+            
+            if (nextElement) {
+                currentElement.style.transform = 'translateX(-100%)';
+                nextElement.classList.add('active');
+                currentSlide++;
+            }
+        }
+        
+        function showResponse(answer) {
+            const responseElement = document.getElementById('response');
+            const restartBtn = document.getElementById('restartBtn');
+            
+            if (answer === '1') {
+                responseElement.innerHTML = "if God wills, He will reunite two lost hearts again at the right time. 😺🌟";
+            } else {
+                responseElement.innerHTML = "I’m always wishing you the best in everything—whatever you do, I hope it all goes your way! 🌟";
+            }
+            
+            restartBtn.style.display = 'inline-block';
+        }
+        
+        function restart() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
